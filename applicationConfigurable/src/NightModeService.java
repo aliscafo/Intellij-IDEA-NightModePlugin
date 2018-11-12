@@ -63,25 +63,6 @@ public class NightModeService {
 
                 LOG.info("WAS CHANGED TO BASIC");
             }
-
-            /*LOG.info(getHourOfDay() + " " + getMinuteOfDay());
-            LOG.info(String.valueOf(NightModeApplicationLevelConfiguration.getInstance().START_TIME_HOURS));*/
-
-            /*LOG.info(String.valueOf(NightModeApplicationLevelConfiguration.getInstance().START_TIME_HOURS));
-
-            EditorColorsScheme scheme = EditorColorsManager.getInstance()
-                    .getScheme(EditorColorsManager.getInstance().getAllSchemes()[0].getName());
-
-            if (scheme != null) {
-                LOG.info("FOUND!" + scheme.getName());
-
-                if (EditorColorsManager.getInstance().getGlobalScheme() != scheme) {
-
-                    EditorColorsManager.getInstance().setGlobalScheme(scheme);
-
-                    LOG.info("WAS CHANGED");
-                }
-            }*/
         }
     }
 
