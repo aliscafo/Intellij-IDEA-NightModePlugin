@@ -131,9 +131,6 @@ public class NightModeConfigurable implements Configurable {
 
     @Override
     public boolean isModified() {
-        /*LOG.info("SELECTED: |" + basicScheme.getSelectedItem().toString() + "|");
-        LOG.info("SELECTED!!!: |" + NightModeApplicationLevelConfiguration.getInstance().BASIC_SCHEME + "|");*/
-
         boolean value = (startHoursBox.getSelectedIndex() != NightModeApplicationLevelConfiguration.getInstance().START_TIME_HOURS) ||
                 (startMinutesBox.getSelectedIndex() != NightModeApplicationLevelConfiguration.getInstance().START_TIME_MINUTES) ||
                 (endHoursBox.getSelectedIndex() != NightModeApplicationLevelConfiguration.getInstance().END_TIME_HOURS) ||
@@ -141,16 +138,6 @@ public class NightModeConfigurable implements Configurable {
                 (!NightModeApplicationLevelConfiguration.getInstance().BASIC_SCHEME.equals(basicScheme.getSelectedItem().toString())) ||
                 (!NightModeApplicationLevelConfiguration.getInstance().ON_SCHEDULE_SCHEME.equals(onScheduleScheme.getSelectedItem().toString())) ||
                 (isSchemeOnSchedule.isSelected() != NightModeApplicationLevelConfiguration.getInstance().IS_SCHEME_ON_SCHEDULE);
-
-        /*LOG.info(String.valueOf(startHoursBox.getSelectedIndex() != NightModeApplicationLevelConfiguration.getInstance().START_TIME_HOURS));
-        LOG.info(String.valueOf(startMinutesBox.getSelectedIndex() != NightModeApplicationLevelConfiguration.getInstance().START_TIME_MINUTES));
-        LOG.info(String.valueOf(endHoursBox.getSelectedIndex() != NightModeApplicationLevelConfiguration.getInstance().END_TIME_HOURS));
-        LOG.info(String.valueOf(endMinutesBox.getSelectedIndex() != NightModeApplicationLevelConfiguration.getInstance().END_TIME_MINUTES));
-        LOG.info(String.valueOf(NightModeApplicationLevelConfiguration.getInstance().BASIC_SCHEME.equals(basicScheme.getSelectedItem().toString())));
-        LOG.info(String.valueOf(NightModeApplicationLevelConfiguration.getInstance().ON_SCHEDULE_SCHEME.equals(onScheduleScheme.getSelectedItem().toString())));
-        LOG.info(String.valueOf(isSchemeOnSchedule.isSelected() != NightModeApplicationLevelConfiguration.getInstance().IS_SCHEME_ON_SCHEDULE));
-
-        LOG.info("VALUE: " + value);*/
 
         return value;
     }
