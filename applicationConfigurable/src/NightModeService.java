@@ -36,13 +36,6 @@ public class NightModeService {
                         .getScheme(NightModeApplicationLevelConfiguration.getInstance().ON_SCHEDULE_SCHEME);
                 EditorColorsManager.getInstance().setGlobalScheme(scheme);
 
-                EditorFactory.getInstance().refreshAllEditors();
-                Project[] openProjects = ProjectManager.getInstance().getOpenProjects();
-                for (Project openProject : openProjects) {
-                    FileStatusManager.getInstance(openProject).fileStatusesChanged();
-                    DaemonCodeAnalyzer.getInstance(openProject).restart();
-                }
-
                 LOG.info("WAS CHANGED TO ON_SCHEDULE");
 
             } else if (!ifTimeForOnScheduleScheme() && !ifCurSchemeIsBasic()) {
@@ -53,14 +46,7 @@ public class NightModeService {
                 EditorColorsScheme scheme = EditorColorsManager.getInstance()
                         .getScheme(NightModeApplicationLevelConfiguration.getInstance().BASIC_SCHEME);
                 EditorColorsManager.getInstance().setGlobalScheme(scheme);
-
-                EditorFactory.getInstance().refreshAllEditors();
-                Project[] openProjects = ProjectManager.getInstance().getOpenProjects();
-                for (Project openProject : openProjects) {
-                    FileStatusManager.getInstance(openProject).fileStatusesChanged();
-                    DaemonCodeAnalyzer.getInstance(openProject).restart();
-                }
-
+                
                 LOG.info("WAS CHANGED TO BASIC");
             }
         }
