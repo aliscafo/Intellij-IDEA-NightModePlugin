@@ -4,24 +4,22 @@ import com.intellij.openapi.editor.colors.EditorColorsScheme;
 import com.intellij.openapi.options.Configurable;
 import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.ui.ComboBox;
-import com.intellij.util.ui.CheckBox;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
-import java.util.Arrays;
 
 public class NightModeConfigurable implements Configurable {
     private static final Logger LOG = Logger.getInstance(NightModeConfigurable.class);
 
     private JPanel myMainPanel;
-    JComboBox startHoursBox = new ComboBox();
-    JComboBox startMinutesBox = new ComboBox();
-    JComboBox endHoursBox = new ComboBox();
-    JComboBox endMinutesBox = new ComboBox();
-    JComboBox basicScheme = new ComboBox();
-    JComboBox onScheduleScheme = new ComboBox();
-    JCheckBox isSchemeOnSchedule = new JCheckBox();
+    private JComboBox startHoursBox = new ComboBox();
+    private JComboBox startMinutesBox = new ComboBox();
+    private JComboBox endHoursBox = new ComboBox();
+    private JComboBox endMinutesBox = new ComboBox();
+    private JComboBox basicScheme = new ComboBox();
+    private JComboBox onScheduleScheme = new ComboBox();
+    private JCheckBox isSchemeOnSchedule = new JCheckBox();
 
     @Nls(capitalization = Nls.Capitalization.Title)
     @Override

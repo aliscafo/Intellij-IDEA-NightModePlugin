@@ -1,15 +1,7 @@
-import com.intellij.codeInsight.daemon.DaemonCodeAnalyzer;
-import com.intellij.debugger.actions.ArrayFilterAction;
-import com.intellij.ide.ui.UISettings;
-import com.intellij.openapi.actionSystem.impl.ActionToolbarImpl;
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.editor.EditorFactory;
 import com.intellij.openapi.editor.colors.EditorColorsManager;
 import com.intellij.openapi.editor.colors.EditorColorsScheme;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.project.ProjectManager;
-import com.intellij.openapi.vcs.FileStatusManager;
-
 
 import java.util.*;
 
@@ -34,27 +26,25 @@ public class NightModeService {
             if (ifTimeForOnScheduleScheme() && !ifCurSchemeIsOnSchedule()) {
                 EditorColorsScheme scheme = EditorColorsManager.getInstance()
                         .getScheme(NightModeApplicationLevelConfiguration.getInstance().ON_SCHEDULE_SCHEME);
-                EditorColorsManager.getInstance().setGlobalScheme(scheme);
+                ApplicationManager.getApplication().invokeLater(() -> EditorColorsManager.getInstance().setGlobalScheme(scheme));
 
                 LOG.info("WAS CHANGED TO ON_SCHEDULE");
 
             } else if (!ifTimeForOnScheduleScheme() && !ifCurSchemeIsBasic()) {
-                LOG.info(EditorColorsManager.getInstance().getGlobalScheme().getName());
-                LOG.info(NightModeApplicationLevelConfiguration.getInstance().BASIC_SCHEME);
-                LOG.info(String.valueOf(ifCurSchemeIsBasic()));
-
                 EditorColorsScheme scheme = EditorColorsManager.getInstance()
                         .getScheme(NightModeApplicationLevelConfiguration.getInstance().BASIC_SCHEME);
-                EditorColorsManager.getInstance().setGlobalScheme(scheme);
-                
+                ApplicationManager.getApplication().invokeLater(() -> EditorColorsManager.getInstance().setGlobalScheme(scheme));
+
                 LOG.info("WAS CHANGED TO BASIC");
             }
+
         }
     }
 
     private Calendar getCalendar() {
         Date date = new Date();
         Calendar calendar = GregorianCalendar.getInstance();
+        calendar.setTime(date);
 
         return calendar;
     }
