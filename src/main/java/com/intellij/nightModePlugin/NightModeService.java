@@ -23,8 +23,6 @@ public class NightModeService {
                 return;
             }
 
-            LOG.info("RUN");
-
             if (ifTimeForOnScheduleScheme() && !ifCurSchemeIsOnSchedule()) {
                 EditorColorsScheme scheme = EditorColorsManager.getInstance()
                         .getScheme(NightModeApplicationLevelConfiguration.getInstance().ON_SCHEDULE_SCHEME);
