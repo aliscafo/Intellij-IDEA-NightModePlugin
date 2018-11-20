@@ -1,0 +1,10 @@
+<application>
+  <component name="NightModeApplicationLevelConfiguration">
+    <option name="START_TIME_HOURS" value="4" />
+    <option name="START_TIME_MINUTES" value="20" />
+    <option name="END_TIME_HOURS" value="4" />
+    <option name="END_TIME_MINUTES" value="58" />
+    <option name="IS_SCHEME_ON_SCHEDULE" value="true" />
+    <option name="ON_SCHEDULE_SCHEME" value="_@user_Darcula" />
+  </component>
+</application>

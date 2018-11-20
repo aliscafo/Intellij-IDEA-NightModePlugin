@@ -1,0 +1,27 @@
+<idea-plugin>
+  <id>com.intellij.nightModePlugin</id>
+  <name>Night Mode</name>
+  <version>1.0-SNAPSHOT</version>
+  <vendor email="support@yourcompany.com" url="http://www.yourcompany.com">YourCompany</vendor>
+  <description>
+      Enter short description for your plugin here.&lt;br&gt;
+      &lt;em&gt;most HTML tags may be used&lt;/em&gt;
+    </description>
+  <change-notes>
+      Add change notes here.&lt;br&gt;
+      &lt;em&gt;most HTML tags may be used&lt;/em&gt;</change-notes>
+  <idea-version since-build="182.4892" until-build="182.*"/>
+  <extensions defaultExtensionNs="com.intellij">
+    <applicationConfigurable instance="com.intellij.nightModePlugin.NightModeConfigurable" groupId="appearance"/>
+  </extensions>
+  <extensions defaultExtensionNs="com.intellij">
+    <applicationService serviceImplementation="com.intellij.nightModePlugin.NightModeApplicationLevelConfiguration"/>
+  </extensions>
+  <application-components>
+    <component>
+      <interface-class>com.intellij.nightModePlugin.NightModeService</interface-class>
+      <implementation-class>com.intellij.nightModePlugin.NightModeService</implementation-class>
+    </component>
+  </application-components>
+  <actions/>
+</idea-plugin>
