@@ -1,10 +1,15 @@
 package com.intellij.nightModePlugin;
 
+import com.google.common.collect.Lists;
+import com.intellij.execution.ExecutionException;
+import com.intellij.execution.configurations.GeneralCommandLine;
+import com.intellij.execution.process.OSProcessHandler;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.colors.EditorColorsManager;
 import com.intellij.openapi.editor.colors.EditorColorsScheme;
 
+import java.io.*;
 import java.util.*;
 
 public class NightModeService {
@@ -12,32 +17,91 @@ public class NightModeService {
 
     NightModeService() {
         Timer time = new Timer();
-        ScheduledTask st = new ScheduledTask();
-        time.schedule(st, 0, 5000);
+
+        if (NightModeApplicationLevelConfiguration.getInstance().IS_SCHEME_ON_SCHEDULE) {
+            ScheduledTaskSchemeOnSchedule st = new ScheduledTaskSchemeOnSchedule();
+            time.schedule(st, 0, 5000);
+        }
+
+        if (NightModeApplicationLevelConfiguration.getInstance().IF_USING_SCRIPT) {
+            ScheduledTaskSchemeUsingScript st = new ScheduledTaskSchemeUsingScript();
+            time.schedule(st, 0, 5000);
+        }
     }
 
-    public class ScheduledTask extends TimerTask {
+    public class ScheduledTaskSchemeOnSchedule extends TimerTask {
         @Override
         public void run() {
-            if (!NightModeApplicationLevelConfiguration.getInstance().IS_SCHEME_ON_SCHEDULE) {
-                return;
+            changeSchemeOnSchedule();
+        }
+    }
+
+    public class ScheduledTaskSchemeUsingScript extends TimerTask {
+        @Override
+        public void run() {
+            if (NightModeApplicationLevelConfiguration.getInstance().IF_USING_SCRIPT) {
+                try {
+                    changeSchemeUsingScript();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
 
-            if (ifTimeForOnScheduleScheme() && !ifCurSchemeIsOnSchedule()) {
-                EditorColorsScheme scheme = EditorColorsManager.getInstance()
-                        .getScheme(NightModeApplicationLevelConfiguration.getInstance().ON_SCHEDULE_SCHEME);
-                ApplicationManager.getApplication().invokeLater(() -> EditorColorsManager.getInstance().setGlobalScheme(scheme));
+        }
+    }
 
-                LOG.info("WAS CHANGED TO ON_SCHEDULE");
+    private void changeSchemeUsingScript() throws IOException, InterruptedException {
+        String command = NightModeApplicationLevelConfiguration.getInstance().COMMAND_FIELD;
+        ProcessBuilder pb = new ProcessBuilder(command);
+        pb = pb.directory(new File(System.getProperty("user.dir")));
 
-            } else if (!ifTimeForOnScheduleScheme() && !ifCurSchemeIsBasic()) {
-                EditorColorsScheme scheme = EditorColorsManager.getInstance()
-                        .getScheme(NightModeApplicationLevelConfiguration.getInstance().BASIC_SCHEME);
-                ApplicationManager.getApplication().invokeLater(() -> EditorColorsManager.getInstance().setGlobalScheme(scheme));
+        Process process = pb.start();
+        process.waitFor();
 
-                LOG.info("WAS CHANGED TO BASIC");
+        String result = output(process.getInputStream());
+
+        if (result.charAt(0) == '0') {
+            EditorColorsScheme scheme = EditorColorsManager.getInstance()
+                    .getScheme(NightModeApplicationLevelConfiguration.getInstance().SCHEME0);
+            ApplicationManager.getApplication().invokeLater(() -> EditorColorsManager.getInstance().setGlobalScheme(scheme));
+        } else if (result.charAt(0) == '1') {
+            EditorColorsScheme scheme = EditorColorsManager.getInstance()
+                    .getScheme(NightModeApplicationLevelConfiguration.getInstance().SCHEME1);
+            ApplicationManager.getApplication().invokeLater(() -> EditorColorsManager.getInstance().setGlobalScheme(scheme));
+        }
+    }
+
+    private static String output(InputStream inputStream) throws IOException {
+        StringBuilder sb = new StringBuilder();
+        BufferedReader br = null;
+        try {
+            br = new BufferedReader(new InputStreamReader(inputStream));
+            String line = null;
+            while ((line = br.readLine()) != null) {
+                sb.append(line + System.getProperty("line.separator"));
             }
+        } finally {
+            br.close();
+        }
+        return sb.toString();
+    }
 
+    private void changeSchemeOnSchedule() {
+        if (ifTimeForOnScheduleScheme() && !ifCurSchemeIsOnSchedule()) {
+            EditorColorsScheme scheme = EditorColorsManager.getInstance()
+                    .getScheme(NightModeApplicationLevelConfiguration.getInstance().ON_SCHEDULE_SCHEME);
+            ApplicationManager.getApplication().invokeLater(() -> EditorColorsManager.getInstance().setGlobalScheme(scheme));
+
+            LOG.info("WAS CHANGED TO ON_SCHEDULE");
+
+        } else if (!ifTimeForOnScheduleScheme() && !ifCurSchemeIsBasic()) {
+            EditorColorsScheme scheme = EditorColorsManager.getInstance()
+                    .getScheme(NightModeApplicationLevelConfiguration.getInstance().BASIC_SCHEME);
+            ApplicationManager.getApplication().invokeLater(() -> EditorColorsManager.getInstance().setGlobalScheme(scheme));
+
+            LOG.info("WAS CHANGED TO BASIC");
         }
     }
 

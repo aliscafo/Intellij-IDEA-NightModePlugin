@@ -14,8 +14,12 @@ public class NightModeApplicationLevelConfiguration implements PersistentStateCo
     public int END_TIME_HOURS = 0;
     public int END_TIME_MINUTES = 0;
     public boolean IS_SCHEME_ON_SCHEDULE = false;
+    public boolean IF_USING_SCRIPT = false;
     public String BASIC_SCHEME = EditorColorsManager.getInstance().getAllSchemes()[0].getName();
     public String ON_SCHEDULE_SCHEME = EditorColorsManager.getInstance().getAllSchemes()[0].getName();
+    public String SCHEME0 = EditorColorsManager.getInstance().getAllSchemes()[0].getName();
+    public String SCHEME1 = EditorColorsManager.getInstance().getAllSchemes()[0].getName();
+    public String COMMAND_FIELD = "";
 
     public static NightModeApplicationLevelConfiguration getInstance() {
         return ServiceManager.getService(NightModeApplicationLevelConfiguration.class);
