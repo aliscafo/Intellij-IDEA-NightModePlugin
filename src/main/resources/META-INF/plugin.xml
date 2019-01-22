@@ -5,7 +5,8 @@
     <vendor email="support@yourcompany.com" url="http://www.yourcompany.com">YourCompany</vendor>
 
     <description><![CDATA[
-      Enter short description for your plugin here.<br>
+      Plugin which allows to switch to dark or light scheme automatically by using
+      the custom schedule switching schemes or through the use of the light sensor. <br>
       <em>most HTML tags may be used</em>
     ]]></description>
 
@@ -25,7 +26,7 @@
     -->
 
     <extensions defaultExtensionNs="com.intellij">
-        <applicationConfigurable instance="com.intellij.nightModePlugin.NightModeConfigurable" groupId="appearance"></applicationConfigurable>
+        <applicationConfigurable instance="com.intellij.nightModePlugin.NightModeConfigurable" groupId="appearance"/>
     </extensions>
 
     <extensions defaultExtensionNs="com.intellij">

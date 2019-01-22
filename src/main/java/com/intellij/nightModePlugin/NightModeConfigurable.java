@@ -4,30 +4,31 @@ import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.colors.EditorColorsManager;
 import com.intellij.openapi.editor.colors.EditorColorsScheme;
 import com.intellij.openapi.options.Configurable;
-import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.options.SchemeManager;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
+import java.util.Objects;
 
 public class NightModeConfigurable implements Configurable {
+    @SuppressWarnings("unused")
     private static final Logger LOG = Logger.getInstance(NightModeConfigurable.class);
 
     private JPanel myMainPanel;
-    private JComboBox startHoursBox;
-    private JComboBox startMinutesBox;
-    private JComboBox endHoursBox;
-    private JComboBox endMinutesBox;
-    private JComboBox basicScheme;
-    private JComboBox onScheduleScheme;
+    private JComboBox<String> startHoursBox;
+    private JComboBox<String> startMinutesBox;
+    private JComboBox<String> endHoursBox;
+    private JComboBox<String> endMinutesBox;
+    private JComboBox<String> basicScheme;
+    private JComboBox<String> onScheduleScheme;
     private JCheckBox isSchemeOnSchedule;
     private JCheckBox ifUsingScript;
     private JLabel scheduleSchemeChangeLabel;
     private JLabel changeSchemeUsingScriptLabel;
     private JTextField commandField;
-    private JComboBox scheme0;
-    private JComboBox scheme1;
+    private JComboBox<String> scheme0;
+    private JComboBox<String> scheme1;
 
     @Nls(capitalization = Nls.Capitalization.Title)
     @Override
@@ -39,13 +40,13 @@ public class NightModeConfigurable implements Configurable {
     @Override
     public JComponent createComponent() {
         String[] listHours = new String[24];
-        for (Integer i = 0; i < 24; i++) {
-            listHours[i] = i.toString();
+        for (int i = 0; i < 24; i++) {
+            listHours[i] = Integer.toString(i);
         }
 
         String[] listMinutes = new String[60];
-        for (Integer i = 0; i < 60; i++) {
-            listMinutes[i] = i.toString();
+        for (int i = 0; i < 60; i++) {
+            listMinutes[i] = Integer.toString(i);
         }
 
         EditorColorsScheme[] schemes = EditorColorsManager.getInstance().getAllSchemes();
@@ -55,16 +56,16 @@ public class NightModeConfigurable implements Configurable {
             schemeNames[i] = SchemeManager.getDisplayName(schemes[i]);
         }
 
-        startHoursBox.setModel(new DefaultComboBoxModel(listHours));
-        endHoursBox.setModel(new DefaultComboBoxModel(listHours));
+        startHoursBox.setModel(new DefaultComboBoxModel<>(listHours));
+        endHoursBox.setModel(new DefaultComboBoxModel<>(listHours));
 
-        startMinutesBox.setModel(new DefaultComboBoxModel(listMinutes));
-        endMinutesBox.setModel(new DefaultComboBoxModel(listMinutes));
+        startMinutesBox.setModel(new DefaultComboBoxModel<>(listMinutes));
+        endMinutesBox.setModel(new DefaultComboBoxModel<>(listMinutes));
 
-        basicScheme.setModel(new DefaultComboBoxModel(schemeNames));
-        onScheduleScheme.setModel(new DefaultComboBoxModel(schemeNames));
-        scheme0.setModel(new DefaultComboBoxModel(schemeNames));
-        scheme1.setModel(new DefaultComboBoxModel(schemeNames));
+        basicScheme.setModel(new DefaultComboBoxModel<>(schemeNames));
+        onScheduleScheme.setModel(new DefaultComboBoxModel<>(schemeNames));
+        scheme0.setModel(new DefaultComboBoxModel<>(schemeNames));
+        scheme1.setModel(new DefaultComboBoxModel<>(schemeNames));
 
         return myMainPanel;
     }
@@ -75,10 +76,10 @@ public class NightModeConfigurable implements Configurable {
                 (startMinutesBox.getSelectedIndex() != NightModeApplicationLevelConfiguration.getInstance().START_TIME_MINUTES) ||
                 (endHoursBox.getSelectedIndex() != NightModeApplicationLevelConfiguration.getInstance().END_TIME_HOURS) ||
                 (endMinutesBox.getSelectedIndex() != NightModeApplicationLevelConfiguration.getInstance().END_TIME_MINUTES) ||
-                (!NightModeApplicationLevelConfiguration.getInstance().BASIC_SCHEME.equals(basicScheme.getSelectedItem().toString())) ||
-                (!NightModeApplicationLevelConfiguration.getInstance().ON_SCHEDULE_SCHEME.equals(onScheduleScheme.getSelectedItem().toString())) ||
-                (!NightModeApplicationLevelConfiguration.getInstance().SCHEME0.equals(scheme0.getSelectedItem().toString())) ||
-                (!NightModeApplicationLevelConfiguration.getInstance().SCHEME1.equals(scheme1.getSelectedItem().toString())) ||
+                (!NightModeApplicationLevelConfiguration.getInstance().BASIC_SCHEME.equals(Objects.requireNonNull(basicScheme.getSelectedItem()).toString())) ||
+                (!NightModeApplicationLevelConfiguration.getInstance().ON_SCHEDULE_SCHEME.equals(Objects.requireNonNull(onScheduleScheme.getSelectedItem()).toString())) ||
+                (!NightModeApplicationLevelConfiguration.getInstance().SCHEME0.equals(Objects.requireNonNull(scheme0.getSelectedItem()).toString())) ||
+                (!NightModeApplicationLevelConfiguration.getInstance().SCHEME1.equals(Objects.requireNonNull(scheme1.getSelectedItem()).toString())) ||
                 (isSchemeOnSchedule.isSelected() != NightModeApplicationLevelConfiguration.getInstance().IS_SCHEME_ON_SCHEDULE) ||
                 (ifUsingScript.isSelected() != NightModeApplicationLevelConfiguration.getInstance().IF_USING_SCRIPT) ||
                 (!commandField.getText().equals(NightModeApplicationLevelConfiguration.getInstance().COMMAND_FIELD));
@@ -107,10 +108,10 @@ public class NightModeConfigurable implements Configurable {
         NightModeApplicationLevelConfiguration.getInstance().START_TIME_MINUTES = startMinutesBox.getSelectedIndex();
         NightModeApplicationLevelConfiguration.getInstance().END_TIME_HOURS = endHoursBox.getSelectedIndex();
         NightModeApplicationLevelConfiguration.getInstance().END_TIME_MINUTES = endMinutesBox.getSelectedIndex();
-        NightModeApplicationLevelConfiguration.getInstance().BASIC_SCHEME = basicScheme.getSelectedItem().toString();
-        NightModeApplicationLevelConfiguration.getInstance().ON_SCHEDULE_SCHEME = onScheduleScheme.getSelectedItem().toString();
-        NightModeApplicationLevelConfiguration.getInstance().SCHEME0 = scheme0.getSelectedItem().toString();
-        NightModeApplicationLevelConfiguration.getInstance().SCHEME1 = scheme1.getSelectedItem().toString();
+        NightModeApplicationLevelConfiguration.getInstance().BASIC_SCHEME = Objects.requireNonNull(basicScheme.getSelectedItem()).toString();
+        NightModeApplicationLevelConfiguration.getInstance().ON_SCHEDULE_SCHEME = Objects.requireNonNull(onScheduleScheme.getSelectedItem()).toString();
+        NightModeApplicationLevelConfiguration.getInstance().SCHEME0 = Objects.requireNonNull(scheme0.getSelectedItem()).toString();
+        NightModeApplicationLevelConfiguration.getInstance().SCHEME1 = Objects.requireNonNull(scheme1.getSelectedItem()).toString();
         NightModeApplicationLevelConfiguration.getInstance().IS_SCHEME_ON_SCHEDULE = isSchemeOnSchedule.isSelected();
         NightModeApplicationLevelConfiguration.getInstance().IF_USING_SCRIPT = ifUsingScript.isSelected();
         NightModeApplicationLevelConfiguration.getInstance().COMMAND_FIELD = commandField.getText();
@@ -137,8 +138,8 @@ public class NightModeConfigurable implements Configurable {
     }
 
     // Returns 0, if didn't find given string.
-    private int findIndexInComboBox(JComboBox comboBox, String item) {
-        ComboBoxModel model = comboBox.getModel();
+    private int findIndexInComboBox(JComboBox<String> comboBox, String item) {
+        ComboBoxModel<String> model = comboBox.getModel();
         int size = model.getSize();
         for (int i = 0; i < size; i++) {
             Object element = model.getElementAt(i);

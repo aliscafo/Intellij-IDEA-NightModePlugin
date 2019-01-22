@@ -1,9 +1,5 @@
 package com.intellij.nightModePlugin;
 
-import com.google.common.collect.Lists;
-import com.intellij.execution.ExecutionException;
-import com.intellij.execution.configurations.GeneralCommandLine;
-import com.intellij.execution.process.OSProcessHandler;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.colors.EditorColorsManager;
@@ -14,6 +10,8 @@ import java.util.*;
 
 public class NightModeService {
     private static final Logger LOG = Logger.getInstance(NightModeService.class);
+    private static final int HOURS_IN_DAY = 24;
+    private static final int MINUTES_IN_HOUR = 60;
 
     NightModeService() {
         Timer time = new Timer();
@@ -42,9 +40,7 @@ public class NightModeService {
             if (NightModeApplicationLevelConfiguration.getInstance().IF_USING_SCRIPT) {
                 try {
                     changeSchemeUsingScript();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
+                } catch (IOException | InterruptedException e) {
                     e.printStackTrace();
                 }
             }
@@ -54,8 +50,7 @@ public class NightModeService {
 
     private void changeSchemeUsingScript() throws IOException, InterruptedException {
         String command = NightModeApplicationLevelConfiguration.getInstance().COMMAND_FIELD;
-        ProcessBuilder pb = new ProcessBuilder(command);
-        pb = pb.directory(new File(System.getProperty("user.dir")));
+        ProcessBuilder pb = new ProcessBuilder(command).directory(new File(System.getProperty("user.dir")));
 
         Process process = pb.start();
         process.waitFor();
@@ -71,19 +66,15 @@ public class NightModeService {
                     .getScheme(NightModeApplicationLevelConfiguration.getInstance().SCHEME1);
             ApplicationManager.getApplication().invokeLater(() -> EditorColorsManager.getInstance().setGlobalScheme(scheme));
         }
-    }
+  }
 
     private static String output(InputStream inputStream) throws IOException {
         StringBuilder sb = new StringBuilder();
-        BufferedReader br = null;
-        try {
-            br = new BufferedReader(new InputStreamReader(inputStream));
-            String line = null;
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
+            String line;
             while ((line = br.readLine()) != null) {
-                sb.append(line + System.getProperty("line.separator"));
+                sb.append(line).append(System.getProperty("line.separator"));
             }
-        } finally {
-            br.close();
         }
         return sb.toString();
     }
@@ -128,22 +119,19 @@ public class NightModeService {
                 NightModeApplicationLevelConfiguration.getInstance().END_TIME_MINUTES;
 
         if (endTime < startTime) {
-            endTime += 24 * 60;
+            endTime += HOURS_IN_DAY * MINUTES_IN_HOUR;
         }
 
-        int curTime = getHourOfDay() * 60 + getMinuteOfDay();
+        int curTime = getHourOfDay() * MINUTES_IN_HOUR + getMinuteOfDay();
 
         if (startTime <= curTime && curTime <= endTime) {
             return true;
         }
 
-        curTime += 24 * 60;
+        curTime += HOURS_IN_DAY * MINUTES_IN_HOUR;
 
-        if (startTime <= curTime && curTime <= endTime) {
-            return true;
-        }
+        return startTime <= curTime && curTime <= endTime;
 
-        return false;
     }
 
     private boolean ifCurSchemeIsOnSchedule() {
