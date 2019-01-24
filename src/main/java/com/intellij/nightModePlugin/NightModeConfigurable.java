@@ -29,6 +29,18 @@ public class NightModeConfigurable implements Configurable {
     private JTextField commandField;
     private JComboBox<String> scheme0;
     private JComboBox<String> scheme1;
+    private JLabel startLabel;
+    private JLabel hoursLabel1;
+    private JLabel minutesLabel1;
+    private JLabel schemaLabel1;
+    private JLabel endLabel;
+    private JLabel hoursLabel2;
+    private JLabel minutesLabel2;
+    private JLabel schemaLabel2;
+    private JLabel scriptLabel;
+    private JLabel descriptionLabel;
+    private JLabel schemaScriptLabel0;
+    private JLabel schemaScriptLabel1;
 
     @Nls(capitalization = Nls.Capitalization.Title)
     @Override
@@ -86,9 +98,52 @@ public class NightModeConfigurable implements Configurable {
 
         setDisabled(isSchemeOnSchedule, changeSchemeUsingScriptLabel, ifUsingScript);
 
-        setDisabled(ifUsingScript, scheduleSchemeChangeLabel, isSchemeOnSchedule);
+        if (isSchemeOnSchedule.isSelected()) {
+            ifUsingScript.setSelected(false);
+            setEnabledValueToOnScheduleMode(false);
+        } else {
+            setEnabledValueToOnScheduleMode(true);
+        }
+
+        if (ifUsingScript.isSelected()) {
+            isSchemeOnSchedule.setSelected(false);
+            setEnabledValueToScriptMode(false);
+        } else {
+            setEnabledValueToScriptMode(true);
+        }
 
         return value;
+    }
+
+    private void setEnabledValueToOnScheduleMode(boolean value) {
+        changeSchemeUsingScriptLabel.setEnabled(value);
+        ifUsingScript.setEnabled(value);
+        scriptLabel.setEnabled(value);
+        commandField.setEnabled(value);
+        descriptionLabel.setEnabled(value);
+        schemaScriptLabel0.setEnabled(value);
+        scheme0.setEnabled(value);
+        schemaScriptLabel1.setEnabled(value);
+        scheme1.setEnabled(value);
+    }
+
+    private void setEnabledValueToScriptMode(boolean value) {
+        scheduleSchemeChangeLabel.setEnabled(value);
+        isSchemeOnSchedule.setEnabled(value);
+        startLabel.setEnabled(value);
+        startHoursBox.setEnabled(value);
+        hoursLabel1.setEnabled(value);
+        startMinutesBox.setEnabled(value);
+        minutesLabel1.setEnabled(value);
+        schemaLabel1.setEnabled(value);
+        onScheduleScheme.setEnabled(value);
+        endLabel.setEnabled(value);
+        endHoursBox.setEnabled(value);
+        hoursLabel2.setEnabled(value);
+        endMinutesBox.setEnabled(value);
+        minutesLabel2.setEnabled(value);
+        schemaLabel2.setEnabled(value);
+        basicScheme.setEnabled(value);
     }
 
     private void setDisabled(JCheckBox ifUsingScript, JLabel scheduleSchemeChangeLabel, JCheckBox isSchemeOnSchedule) {

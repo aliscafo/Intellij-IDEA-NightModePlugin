@@ -25,7 +25,7 @@
           <text value=""/>
         </properties>
       </component>
-      <component id="d0572" class="javax.swing.JLabel">
+      <component id="d0572" class="javax.swing.JLabel" binding="startLabel">
         <constraints>
           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -39,7 +39,7 @@
         </constraints>
         <properties/>
       </component>
-      <component id="97d81" class="javax.swing.JLabel">
+      <component id="97d81" class="javax.swing.JLabel" binding="hoursLabel1">
         <constraints>
           <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -53,7 +53,7 @@
         </constraints>
         <properties/>
       </component>
-      <component id="b734a" class="javax.swing.JLabel">
+      <component id="b734a" class="javax.swing.JLabel" binding="endLabel">
         <constraints>
           <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -67,7 +67,7 @@
         </constraints>
         <properties/>
       </component>
-      <component id="7dce8" class="javax.swing.JLabel">
+      <component id="7dce8" class="javax.swing.JLabel" binding="hoursLabel2">
         <constraints>
           <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -93,7 +93,7 @@
         </constraints>
         <properties/>
       </component>
-      <component id="264a7" class="javax.swing.JLabel">
+      <component id="264a7" class="javax.swing.JLabel" binding="schemaLabel1">
         <constraints>
           <grid row="1" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="3" use-parent-layout="false"/>
         </constraints>
@@ -101,7 +101,7 @@
           <text value="Schema:"/>
         </properties>
       </component>
-      <component id="edc30" class="javax.swing.JLabel">
+      <component id="edc30" class="javax.swing.JLabel" binding="schemaLabel2">
         <constraints>
           <grid row="2" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="3" use-parent-layout="false"/>
         </constraints>
@@ -146,7 +146,7 @@
           <text value=""/>
         </properties>
       </component>
-      <component id="19079" class="javax.swing.JLabel">
+      <component id="19079" class="javax.swing.JLabel" binding="scriptLabel">
         <constraints>
           <grid row="5" column="0" row-span="1" col-span="3" vsize-policy="3" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -164,17 +164,17 @@
           <text value=""/>
         </properties>
       </component>
-      <component id="c8cbc" class="javax.swing.JLabel">
+      <component id="c8cbc" class="javax.swing.JLabel" binding="schemaScriptLabel0">
         <constraints>
           <grid row="6" column="0" row-span="1" col-span="4" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
             <preferred-size width="340" height="33"/>
           </grid>
         </constraints>
         <properties>
-          <text value="Scheme displayed when the value of the command &quot;0&quot;:"/>
+          <text value="Schema displayed when the value of the command &quot;0&quot;:"/>
         </properties>
       </component>
-      <component id="f77f3" class="javax.swing.JLabel">
+      <component id="f77f3" class="javax.swing.JLabel" binding="minutesLabel1">
         <constraints>
           <grid row="1" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -182,7 +182,7 @@
           <text value="minutes"/>
         </properties>
       </component>
-      <component id="20ec5" class="javax.swing.JLabel">
+      <component id="20ec5" class="javax.swing.JLabel" binding="minutesLabel2">
         <constraints>
           <grid row="2" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -198,12 +198,12 @@
         </constraints>
         <properties/>
       </component>
-      <component id="6ebd3" class="javax.swing.JLabel">
+      <component id="6ebd3" class="javax.swing.JLabel" binding="schemaScriptLabel1">
         <constraints>
           <grid row="7" column="0" row-span="1" col-span="4" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Scheme displayed when the value of the command &quot;1&quot;:"/>
+          <text value="Schema displayed when the value of the command &quot;1&quot;:"/>
         </properties>
       </component>
       <component id="135c" class="javax.swing.JComboBox" binding="scheme1">
@@ -212,7 +212,7 @@
         </constraints>
         <properties/>
       </component>
-      <component id="88569" class="javax.swing.JLabel">
+      <component id="88569" class="javax.swing.JLabel" binding="descriptionLabel">
         <constraints>
           <grid row="5" column="8" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
